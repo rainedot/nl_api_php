@@ -6,7 +6,7 @@ class telegramBot{
     public static string $teleg_url = "https://api.telegram.org/bot" . TELEG_TOKEN . "/";
 
     public static array $chats = [
-        "-1001461375117"
+        ""
     ];
 
     private function curl($data, $url){
