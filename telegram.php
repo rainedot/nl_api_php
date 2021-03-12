@@ -22,25 +22,38 @@ class telegramBot{
         return $data;
     }
 
-    public function init():int
+    public function test():array
     {
         $teleg_url = self::$teleg_url;
-        return json_decode($this->curl("" ,$teleg_url . "getMe"), true)['ok'];
+        $chats = self::$chats;
+        $error = array();
+        if(empty($chats)){
+            $error[] = "Chats are not loaded";
+            $error['status'] = 1;
+        }
+        if(json_decode($this->curl("" ,$teleg_url . "getMe"), true)['ok'] == 0){
+            $error[] = "Wrong token";
+            $error['status'] = 1;
+        }
+        return $error;
     }
 
     public function writeMessage($message): void
     {
         $teleg_url = self::$teleg_url;
         $chats = self::$chats;
-        for($i = 0; $i <= count($chats); $i++){
-            $data = [
-                'chat_id' => $chats[$i],
-                'text' => $message,
-                'parse_mode' => 'html',
-                'no_webpage' => 'true'
-            ];
-            $this->curl(json_encode($data), $teleg_url . "sendMessage");
+        if(!$this->test()['status']) {
+            for($i = 0; $i <= count($chats); $i++){
+                $data = [
+                    'chat_id' => $chats[$i],
+                    'text' => $message,
+                    'parse_mode' => 'html',
+                    'no_webpage' => 'true'
+                ];
+                $this->curl(json_encode($data), $teleg_url . "sendMessage");
+            }
+        } else {
+            print_r($this->test());
         }
-
     }
 }
