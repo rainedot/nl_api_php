@@ -22,7 +22,7 @@ class validators{
             if(is_float($current)){
                 $current = number_format($current, 1);
             }
-            $string = $string. $key . $current;
+            $string = $string . $key . $current;
         }
         return $string;
     }
