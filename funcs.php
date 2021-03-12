@@ -67,8 +67,7 @@ class request{
             'user_id' => $user_id,      // your uid
             'id' => $id                 // unique request id
         );
-        $signature = $validator->genSig($data, TOKEN);
-        $data['signature'] = $signature;
+        $data['signature'] = $validator->genSig($data, TOKEN);
         $data = json_encode($data);
         return $this->curl_request($data, "https://neverlose.cc/api/market/transfer-money");
 
@@ -82,8 +81,7 @@ class request{
             'id' => $uniqueid,              // unique request id
             'code' => $code                 // market item code /item?id=*****
         );
-        $signature = $validator->genSig($data, TOKEN);
-        $data['signature'] = $signature;
+        $data['signature'] = $validator->genSig($data, TOKEN);
         $data = json_encode($data);
         return $this->curl_request($data, "https://neverlose.cc/api/market/give-for-free");
 
